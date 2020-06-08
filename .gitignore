@@ -1,0 +1,6 @@
+input.txt
+output.txt
+__pycache__/
+build/
+dist/
+*.spec
