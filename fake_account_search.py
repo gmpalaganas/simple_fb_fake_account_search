@@ -37,8 +37,8 @@ try:
     lines = input_file.read().splitlines()
     
     user_id = lines[0] 
-    range_start = lines[1]
-    range_end= lines[2]
+    range_start = int(lines[1])
+    range_end= int(lines[2])
 
     print("ID to be tested is {} with range {} to {}".format(user_id,range_start,range_end))
 
