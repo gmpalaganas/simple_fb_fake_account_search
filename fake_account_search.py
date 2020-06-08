@@ -24,7 +24,6 @@ async def main(base_url, user_id, range_start, range_end):
 
 
     test_ids_response = await asyncio.gather(*[get_response(base_url+test_id) for test_id in test_ids])
-
     for i, status in enumerate(test_ids_response):
         if test_ids_response[i] == 200:
             suspected_fake_ids.append(test_ids[i])
@@ -53,6 +52,7 @@ try:
     input_file.close()
     output_file.close()
 
+    print("Search complete, {} suspected IDs found, please check output.txt for more information".format(len(suspected_fake_ids)))
     input("Press enter key to continue...")
 
 except FileNotFoundError:
