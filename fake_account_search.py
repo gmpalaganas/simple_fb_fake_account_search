@@ -17,8 +17,8 @@ async def get_response(url):
 
 async def main(base_url, user_id, range_start, range_end):
 
-    range_start = 900
-    range_end = 920
+    range_start = range_start
+    range_end = range_end
 
     test_ids = [ "{}.{}".format(user_id,i) for i in range(range_start,range_end+1) ]
 
