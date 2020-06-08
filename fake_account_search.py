@@ -53,6 +53,8 @@ try:
     input_file.close()
     output_file.close()
 
+    input("Press enter key to continue...")
+
 except FileNotFoundError:
-    print("File does not exist")
+    print("Input file does not exist")
 
