@@ -1,19 +1,28 @@
 import asyncio
 import aiohttp
+import html5lib
+from bs4 import BeautifulSoup
 
 suspected_fake_ids = []
 
 async def get_response(url):
     resp_code = 404
+    dp = None
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 resp_code = response.status
+                if resp_code == 200:
+                    content = await response.read()
+                    content_soup = BeautifulSoup(content.decode('utf-8'), 'html5lib')
+                    dp_container = content_soup.find(class_='profilePicThumb')
+                    dp = dp_container.find(class_='silhouette')
+
     except Exception as e:
         print(e)
         resp_code = -1
 
-    return resp_code
+    return [resp_code, dp]
 
 async def main(base_url, user_id, range_start, range_end):
 
@@ -25,7 +34,7 @@ async def main(base_url, user_id, range_start, range_end):
 
     test_ids_response = await asyncio.gather(*[get_response(base_url+test_id) for test_id in test_ids])
     for i, status in enumerate(test_ids_response):
-        if test_ids_response[i] == 200:
+        if test_ids_response[i][0] == 200 and test_ids_response[i][1] is not None:
             suspected_fake_ids.append(test_ids[i])
 
 try:
